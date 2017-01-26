@@ -7,6 +7,14 @@ import { prefixLink } from 'gatsby-helpers'
 import access from 'safe-access'
 import { config } from 'config'
 import SitePost from '../components/SitePost'
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+injectTapEventPlugin();
 
 class SiteIndex extends React.Component {
     description(body) {
@@ -18,6 +26,10 @@ class SiteIndex extends React.Component {
             }
         }
         return test
+    }
+
+    handleClick(){
+        alert('Got clicked niggah!');
     }
 
     render() {
@@ -37,7 +49,7 @@ class SiteIndex extends React.Component {
                 for (const i in categories) {
                     const c = categories[i]
                     category.push(
-                         <span className="tag tag-danger" key={i}>{ c }</span>
+                        <span className="tag tag-danger" key={i}>{c}</span>
                     )
                 }
 
@@ -46,36 +58,42 @@ class SiteIndex extends React.Component {
 
                 pageLinks.push(
                     <div className='article-wrap' key={page.path}>
-                      <div className="page-header">
-                        <Link style={ { textDecoration: 'none',} } to={ prefixLink(page.path) } >
-                          <h1>{ title }</h1>
-                          <time dateTime={ moment(datePublished).format('MMMM D, YYYY') }>
-                            { moment(datePublished).format('YYYY/MM/DD') }
-                          </time>
-                        </Link>
-                        { category }
-                      </div>
-                      <div className="page-content" dangerouslySetInnerHTML={ { __html: this.description(description) } } />
-                      <p><Link className='readmore' to={ prefixLink(page.path) }><span className="btn btn-outline-danger btn-block">続きを読む</span></Link></p>
+                        <div className="page-header">
+                            <Link style={{ textDecoration: 'none', }} to={prefixLink(page.path)} >
+                                <h1>{title}</h1>
+                                <time dateTime={moment(datePublished).format('MMMM D, YYYY')}>
+                                    {moment(datePublished).format('YYYY/MM/DD')}
+                                </time>
+                            </Link>
+                            {category}
+                        </div>
+                        <div className="page-content" dangerouslySetInnerHTML={{ __html: this.description(description) }} />
+                        <p><Link className='readmore' to={prefixLink(page.path)}>
+                            <FloatingActionButton onClick={this.handleClick}>
+                                <ContentAdd />
+                            </FloatingActionButton>
+                        </Link></p>
                     </div>
                 )
             }
         })
 
         return (
-            <DocumentTitle title={ config.siteTitle }>
-              <div className='container'>
-                <div className='articles col-md-12'>
-                  { pageLinks }
-                </div>
-              </div>
-            </DocumentTitle>
-        )
+            <MuiThemeProvider>
+                <DocumentTitle title={config.siteTitle}>
+                    <div className='container'>
+                        <div className='articles col-md-12'>
+                            {pageLinks}
+                        </div>
+                    </div>
+                </DocumentTitle>
+            </MuiThemeProvider>
+                )
     }
 }
 
 SiteIndex.propTypes = {
-    route: React.PropTypes.object,
+                    route: React.PropTypes.object,
 }
 
 export default SiteIndex

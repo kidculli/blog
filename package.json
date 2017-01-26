@@ -32,6 +32,7 @@
     "history": "^2.1.1",
     "lodash": "^4.14.1",
     "markdown-it": "^6.0.2",
+    "material-ui": "^0.16.7",
     "moment": "^2.14.1",
     "react": "^15.3.0",
     "react-document-title": "^2.0.2",
@@ -39,6 +40,7 @@
     "react-ga": "^2.1.2",
     "react-router": "^2.6.1",
     "react-share": "^1.11.0",
+    "react-tap-event-plugin": "^2.0.1",
     "safe-access": "^0.1.0",
     "underscore.string": "^3.2.3"
   },
